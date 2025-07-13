@@ -9,6 +9,7 @@ return{
         "vhdl",
         "sql",
         "go",
+        "rust",
       }
     }
   },
