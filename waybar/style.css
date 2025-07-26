@@ -1,0 +1,149 @@
+@define-color foreground	#f8f8f2;
+@define-color orange	#ffb86c;
+@define-color gray	#44475a;
+@define-color black #21222c;
+@define-color red	#ff5555;
+@define-color green	#50fa7b;
+@define-color yellow	#f1fa8c;
+@define-color cyan	#8be9fd;
+@define-color blue	#6272a4;
+@define-color purple	#bd93f9;
+@define-color pink	#ff79c6;
+@define-color white #ffffff;
+@define-color brred #ff6e6e;
+@define-color brgreen #69ff94;
+@define-color bryellow #ffffa5;
+@define-color brcyan #a4ffff;
+@define-color brblue #6272a4;
+@define-color brpurple #7e4cf6;
+@define-color brpink #ff92df;
+
+@define-color arch_blue #89b4fa;
+
+@define-color rgbabrpurple rgba(126, 76, 246, 0.3);
+
+/* brpurple opacity 0 */
+@define-color background rgba(126, 76, 246, 0);
+
+@define-color workspace_background	@brcyan;
+@define-color workspace_button	@brpurple;
+@define-color workspace_active	@brcyan;
+@define-color workspace_active_background	@brpurple;
+@define-color workspace_urgent	@white;
+@define-color workspace_urgent_background	@brred;
+@define-color workspace_hover	@black;
+@define-color workspace_hover_background	@yellow;
+@define-color critical	@red;
+@define-color warning	@brred;
+
+
+* {
+  border: none;
+  font-family: "roboto";
+  font-size: 16px;
+  /* border-radius: 0px; */
+  /* min-height: 0; */
+}
+
+window#waybar {
+  background: transparent;
+  /* margin-top: 2px; */
+  /* color: @foreground; */
+}
+
+#workspaces {
+  background: @workspace_background;
+  /* opacity: 0.65; */
+  transition: none;
+  /* padding: 0px 10px 0px; */
+  border-radius: 30px;
+}
+
+#workspaces button, #workspaces button.persistent {
+  background: transparent;
+  color: @workspace_button;
+  transition: none;
+}
+
+#workspaces button.active {
+  background: @workspace_active_background;
+  color: @workspace_active;
+  border-radius: 30px;
+  /*
+border-top: 2px solid @pink;
+border-bottom: 2px solid @pink;
+*/
+}
+
+#workspaces button.urgent {
+  background: @workspace_urgent_background;
+  color: @workspace_urgent;
+  border-radius: 30px;
+}
+
+#workspaces button:hover {
+  background: @workspace_hover_background;
+  color: @workspace_hover;
+  border-radius: 30px;
+}
+
+#taskbar {
+  background: @background;
+  padding-left: 10px;
+  /* border-radius: 100px; */
+  /* margin: 2px 0px 0px 0px; */
+}
+
+#taskbar button:hover {
+  background: @rgbabrpurple;
+}
+
+tooltip {
+  background: @rgbabrpurple;
+  border-radius: 30px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: @purple;
+  color: @cyan;
+}
+
+tooltip label{
+  color: @grey;
+}
+
+#cpu,
+#memory,
+#clock,
+#battery,
+#network,
+#tray,
+#temperature,
+#battery {
+  color: @cyan;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#battery.discharging {
+  color: @foreground;
+}
+
+#battery.warning:not(.charging) {
+  /* background: @warning; */
+  color: @warning;
+}
+
+#battery.critical:not(.charging) {
+  /* background-color: @critical; */
+  color: @critical;
+}
+
+#clock {
+  /* border-radius: 0px 5px 5px 0px; */
+}
+
+#tray {
+  background: @background;
+  border-radius: 100px;
+  margin: 0px 30px 0px 0px;
+}
