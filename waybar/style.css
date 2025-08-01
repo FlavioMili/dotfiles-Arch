@@ -129,6 +129,10 @@ tooltip label{
   color: @foreground;
 }
 
+#battery.charging {
+  color: @green;
+}
+
 #battery.warning:not(.charging) {
   /* background: @warning; */
   color: @warning;
