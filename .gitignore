@@ -14,3 +14,5 @@ Electron
 session
 Qt*
 trashrc
+kcachegrind*
+btop
