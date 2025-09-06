@@ -10,7 +10,8 @@ kde.org
 dolphinrc
 arduino-ide
 configstore
-Electron
+Electron*
+electron*
 session
 Qt*
 trashrc
@@ -18,3 +19,4 @@ kcachegrind*
 btop
 heaptrack*
 qmk
+discord
