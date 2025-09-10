@@ -1,15 +1,17 @@
-configuration{
-    modi: ["drun", "window", "run"];
-    icon-theme: "Papirus-Dark";
-    show-icons: true;
+configuration {
+    modi: "drun,run,filebrowser,window";
+    font: "JetBrainsMono Nerd Font 12";
     terminal: "ghostty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
-    sidebar-mode: false;
-    display-drun: " ";
-    display-run: " ";
-    display-window: " ";
+    hide-scrollbar: true;
+    display-drun: " Apps";
+    display-run: " Run";
+    display-window: " Window";
+    display-filebrowser: " Location";
+    display-Network: " Network";
+    sidebar-mode: true;
     
     //adding vim keybindings
     kb-row-up: "Up,Control+k";
@@ -18,15 +20,16 @@ configuration{
     kb-row-down: "Down,Control+j";
 
     kb-accept-entry: "Control+z,Control+y,Return,KP_Enter";
-
-    //fixing up
+    
     kb-remove-to-eol: "";
     kb-move-char-back: "Control+b";
     kb-remove-char-back: "BackSpace";
     kb-move-char-forward: "Control+f";
     kb-mode-complete: "Control+o";
+    
+    // Enable icons
+    show-icons: true;
+    icon-theme: "Papirus";
 }
 
-//@theme "/usr/share/rofi/themes/Arc.rasi"
-
-@theme "/usr/share/rofi/themes/Adapta-Nokto.rasi"
+@theme "catppuccin"

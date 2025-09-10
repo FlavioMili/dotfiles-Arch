@@ -1,9 +1,4 @@
-/*
-Copyright 2019 @foostan
-Copyright 2020 Drashna Jaelre <@drashna>
-
-GPLv2 or later.
-*/
+// Copyright (c) 2025 Flavio Milinanni
 
 #include QMK_KEYBOARD_H
 

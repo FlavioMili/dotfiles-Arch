@@ -1,20 +1,5 @@
-/*
-Copyright 2019 @foostan
-Copyright 2020 Drashna Jaelre <@drashna>
+// Copyright (c) 2025 Flavio Milinanni
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 // OLED setup
 #include "quantum.h"
 #include <stdint.h>
@@ -48,98 +33,21 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 //
 // Render left OLED display
 //
-static void render_status(void) {
-    // Update animation every 500ms using your existing anim_timer
-    if (timer_elapsed(anim_timer) > 500) {
-        anim_frame = (anim_frame + 1) % 4;
-        anim_timer = timer_read();
+bool render_logo(void) {
+
+    // Define letters for each row (two columns)
+    const char left_col[]  = {'*', ' ', 'F','L','A','V','I','O',' ', '*'};
+    const char right_col[] = {'*', ' ', 'M','I','L','I',' ',' ',' ', '*'};
+
+    // Print each row
+    for (uint8_t i = 0; i < 10; i++) {
+        oled_set_cursor(0, i); // column 0, line i
+        oled_write_char(left_col[i], false);
+        oled_write_char(' ', false); // space between columns
+        oled_write_char(right_col[i], false);
     }
 
-    // Line 1: Layer with visual indicators
-    uint8_t current_layer = get_highest_layer(layer_state);
-    char layer_str[22];
-
-    switch (current_layer) {
-        case 2:
-            snprintf(layer_str, sizeof(layer_str), "^^^");
-            break;
-        case 1:
-            snprintf(layer_str, sizeof(layer_str), "vvv");
-            break;
-        default:
-            snprintf(layer_str, sizeof(layer_str), "***");
-            break;
-    }
-    oled_write_ln(layer_str, false);
-
-    // Line 2: WPM display with modifiers
-    uint8_t current_wpm = get_current_wpm();
-    char wpm_line[22];
-    char caps_indicator = host_keyboard_led_state().caps_lock ? 'C' : '-';
-    char shift_indicator = (get_mods() & MOD_MASK_SHIFT) ? 'S' : '-';
-    char ctrl_indicator = (get_mods() & MOD_MASK_CTRL) ? '^' : '-';
-    char alt_indicator = (get_mods() & MOD_MASK_ALT) ? 'A' : '-';
-
-    snprintf(wpm_line, sizeof(wpm_line), "WPM:\n%3d\n %c%c%c%c\n", current_wpm,
-             caps_indicator, shift_indicator, ctrl_indicator, alt_indicator);
-    oled_write_ln(wpm_line, false);
-
-    // Line 3: ASCII progress bar (20 chars wide)
-    char progress_line[22];
-    int progress_level = (current_wpm > 100) ? 20 : (current_wpm / 5); // 0-20 levels
-
-    // Create progress bar with animation
-    char bar_chars[21];
-    for(int i = 0; i < 20; i++) {
-        if(i < progress_level) {
-            // Animated progress characters
-            switch(anim_frame) {
-                case 0: bar_chars[i] = '#'; break;
-                case 1: bar_chars[i] = '='; break;
-                case 2: bar_chars[i] = '&'; break;
-                case 3: bar_chars[i] = 'x'; break;
-            }
-        } else {
-            bar_chars[i] = '.';
-        }
-    }
-    bar_chars[20] = '\0';
-
-    snprintf(progress_line, sizeof(progress_line), "%s", bar_chars);
-    oled_write_ln(progress_line, false);
-
-    // Line 4: Typing activity animation (20 chars wide)
-    char activity_line[22];
-
-    if(current_wpm > 0) {
-        // Active typing animation - moving wave
-        char wave_pattern[21];
-        for(int i = 0; i < 20; i++) {
-            int wave_pos = (i + anim_frame) % 4;
-            switch(wave_pos) {
-                case 0: wave_pattern[i] = '~'; break;
-                case 1: wave_pattern[i] = '-'; break;
-                case 2: wave_pattern[i] = '~'; break;
-                case 3: wave_pattern[i] = '_'; break;
-            }
-        }
-        wave_pattern[20] = '\0';
-        snprintf(activity_line, sizeof(activity_line), "%s", wave_pattern);
-    } else {
-        // Idle animation - pulsing pattern
-        char pulse_pattern[21];
-        for(int i = 0; i < 20; i++) {
-            if((i + anim_frame) % 5 == 0) {
-                pulse_pattern[i] = (anim_frame % 2) ? 'o' : '*';
-            } else {
-                pulse_pattern[i] = ' ';
-            }
-        }
-        pulse_pattern[20] = '\0';
-        snprintf(activity_line, sizeof(activity_line), "%s", pulse_pattern);
-    }
-
-    oled_write_ln(activity_line, false);
+    return false; // static display
 }
 
 //
@@ -254,7 +162,7 @@ static void render_anim(void) {
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         // Left side
-        render_status();
+        render_logo();
     } else {
         // Right side
         render_anim();
