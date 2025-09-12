@@ -50,7 +50,7 @@
 
 clipboard-read = allow
 clipboard-write = allow
-background-opacity = 0.7
+background-opacity = 0.85
 background-blur = true
 theme = catppuccin-frappe
 bold-is-bright = true
