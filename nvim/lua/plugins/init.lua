@@ -8,4 +8,5 @@ return {
   require("plugins.nvimtree"),
   require("plugins.treesitter"),
   require("plugins.undotree"),
+  require("plugins.vimtex"),
 }

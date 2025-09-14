@@ -3,7 +3,7 @@ vim.cmd("language en_US.UTF-8")
 
 vim.o.relativenumber = true
 vim.o.mouse = "a"
-vim.o.shiftwidth = 0
+vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.g.mapleader = " "
 vim.g.have_nerd_font = true
