@@ -2,7 +2,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 20,
+  "height": 32,
   "margin-right": 5,
   "margin-left": 5, 
   "margin-top": 5,
@@ -21,7 +21,7 @@
     "cpu",
     "memory",
     "network",
-    // "power-profiles-daemon",
+    "power-profiles-daemon",
     "battery",
     "clock",
   ],
@@ -83,6 +83,7 @@
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
     "format": " {capacity}% {icon}",
+    "tooltip-format": "{power} W",
     "states": {
       "warning": 29,
       "critical": 20
@@ -96,8 +97,8 @@
     "format-ethernet": " ",
     "format-disconnected": " ", //An empty format will hide the module.
     "tooltip-format": " {ifname} via {gwaddr}",
-    "tooltip-format-wifi": " {essid} ({signalStrength}%)",
-    "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
+    "tooltip-format-wifi": "  {essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "  {ifname} {ipaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50
   },
@@ -109,15 +110,15 @@
     "on-click": "setbg"
   },
 
-  // "power-profiles-daemon": {
-  //   "format": "{icon}",
-  //   "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-  //   "tooltip": true,
-  //   "format-icons": {
-  //     "default": "",
-  //     "performance": "",
-  //     "balanced": "",
-  //     "power-saver": ""
-  //   }
-  // },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
 }

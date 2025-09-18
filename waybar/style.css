@@ -111,7 +111,7 @@ tooltip label{
   color: @grey;
 }
 
-/* #power-profiles-daemon, */
+#power-profiles-daemon,
 #cpu,
 #memory,
 #clock,
