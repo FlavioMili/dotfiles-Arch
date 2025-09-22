@@ -12,6 +12,7 @@ M.base46 = {
 		Comment = { italic = true },
 		["@comment"] = { italic = true , bold = true},
 	},
+  integrations = { "hop" },
 }
 
 return M

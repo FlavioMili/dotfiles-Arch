@@ -15,6 +15,8 @@ vim.o.confirm = true
 vim.o.expandtab = true
 vim.o.smartindent = true
 
+vim.o.makeprg = "cmake --build build"
+
 -- trailing space characters
 vim.opt.listchars = {
   tab = "▷ ",
