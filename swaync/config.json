@@ -1,0 +1,35 @@
+{
+  "position": "top-right",
+  "layer": "overlay",
+  "control-center-position": "right",
+  "control-center-margin": 20,
+  "notification-margin": 12,
+  "notification-animations": true,
+  "control-center-animations": true,
+  "timeout": 5000,
+
+  "widgets": [
+    "title",
+    "dnd",
+    "mpris",
+    "volume",
+    "notifications"
+  ],
+
+  "widget-config": {
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "mpris": {
+      "max-entries": 2,
+      "show-cover": true
+    },
+    "volume": {
+      "show-percentage": true
+    }
+  }
+}
