@@ -18,11 +18,13 @@
 
   "modules-right": [
     "custom/notification",
+    "power-profiles-daemon",
+    // "custom/keep-awake-button",
+    "idle_inhibitor",
     "temperature",
     "cpu",
     "memory",
     "network",
-    "power-profiles-daemon",
     "battery",
     "clock",
   ],
@@ -33,7 +35,7 @@
     "all-outputs": true,
     "show-special": true,
     "persistent-workspaces": {
-      "*": [ 1, 2 ],
+      "*": [ 1 ],
     },
   },
 
@@ -112,10 +114,10 @@
     "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "tooltip": true,
     "format-icons": {
-      "default": "",
-      "performance": "",
-      "balanced": "",
-      "power-saver": ""
+      "default": " ",
+      "performance": " ",
+      "balanced": " ",
+      "power-saver": " "
     }
   },
 
@@ -124,13 +126,13 @@
     "format": "{icon}",
     "format-icons": {
       "notification": "<span foreground='red'><sup></sup></span>",
-      "none": "",
+      "none": " ",
       "dnd-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-none": "",
+      "dnd-none": " ",
       "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "inhibited-none": "",
+      "inhibited-none": " ",
       "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-inhibited-none": ""
+      "dnd-inhibited-none": " "
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
@@ -139,4 +141,27 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
+  
+  "custom/keep-awake-button": {
+    "tooltip": true,
+    "format": " {icon} sds",
+    "format-icons": {
+      "locked": "󰌾 ",
+      "unlocked": " ",
+    }, 
+    "tooltip-format-locked": "Hypridle ON",
+    "tooltip-format-unlocked": "Hypridle OFF",
+    "return-type": "json",
+    "exec": "~/.config/waybar/Scripts/keep-awake-button.sh --status",
+    "on-click": "~/.config/waybar/Scripts/keep-awake-button.sh",
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": " ",
+      "deactivated": " "
+    }
+  }
+
 }

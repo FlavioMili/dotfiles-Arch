@@ -23,7 +23,7 @@ while [[ 0 -eq 0 ]]; do
 			sleep 300
 		elif [[ $battery_charge -le 35 ]]; then
 			notify-send "Battery low!" "${battery_charge}%"
-			sleep 300
+			sleep 500
 		fi
 	else
 		sleep 600

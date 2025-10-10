@@ -110,7 +110,15 @@ tooltip {
 }
 
 tooltip label{
-  color: @grey;
+  color: @gray;
+}
+
+#custom-keep-awake-button,
+#tray {
+  color: @cyan;
+  background: @background;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 #custom-notification,
@@ -120,7 +128,7 @@ tooltip label{
 #clock,
 #battery,
 #network,
-#tray,
+#idle_inhibitor,
 #temperature,
 #battery {
   color: @cyan;
@@ -151,11 +159,3 @@ tooltip label{
 /* #clock { */
 /*   border-radius: 0px 5px 5px 0px; */
 /* } */
-
-
-#custom-notification,
-#tray {
-  background: @background;
-  border-radius: 100px;
-  margin: 0px 30px 0px 30px;
-}
