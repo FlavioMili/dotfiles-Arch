@@ -1,4 +1,4 @@
-return{
+return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -10,8 +10,7 @@ return{
         "sql",
         "go",
         "rust",
-      }
-    }
+      },
+    },
   },
-
 }

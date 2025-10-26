@@ -18,11 +18,6 @@ vim.o.smartindent = true
 vim.o.makeprg = "cmake --build build"
 
 -- trailing space characters
-vim.opt.listchars = {
-  tab = "▷ ",
-  trail = "·",
-  nbsp = "○",
-}
 
 -- Yank highlighting
 vim.api.nvim_create_autocmd("TextYankPost", {
