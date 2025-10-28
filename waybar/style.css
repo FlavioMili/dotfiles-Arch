@@ -1,126 +1,91 @@
-@define-color foreground	#f8f8f2;
-@define-color orange	#ffb86c;
-@define-color gray	#44475a;
-@define-color black #21222c;
-@define-color red	#ff5555;
-@define-color green	#50fa7b;
-@define-color yellow	#f1fa8c;
-@define-color cyan	#8be9fd;
-@define-color blue	#6272a4;
-@define-color purple	#bd93f9;
-@define-color pink	#ff79c6;
+@define-color background #1e1b2f;        /* Dark purple-black */
+@define-color foreground #f8f8f2;
+@define-color gray #5c567c;
+@define-color black #1b1a2f;
+@define-color red #ff6c6b;
+@define-color green #9ece6a;
+@define-color yellow #e0af68;
+@define-color cyan #7dcfff;
+@define-color blue #7aa2f7;
+@define-color purple #bb9af7;
+@define-color pink #f7768e;
 @define-color white #ffffff;
-@define-color brred #ff6e6e;
-@define-color brgreen #69ff94;
-@define-color bryellow #ffffa5;
-@define-color brcyan #a4ffff;
-@define-color brblue #6272a4;
-@define-color brpurple #7e4cf6;
-@define-color brpink #ff92df;
-
-@define-color arch_blue #89b4fa;
-
-@define-color rgbabrpurple rgba(126, 76, 246, 0.3);
-
-/* brpurple opacity 0 */
-@define-color background rgba(126, 76, 246, 0);
-
-@define-color workspace_background	@brcyan;
-@define-color workspace_button	@brpurple;
-@define-color workspace_active	@brcyan;
-@define-color workspace_active_background	@brpurple;
-@define-color workspace_urgent	@white;
-@define-color workspace_urgent_background	@brred;
-@define-color workspace_hover	@black;
-@define-color workspace_hover_background	@yellow;
-
-@define-color critical	@red;
-@define-color warning	@brred;
-@define-color good @brgreen;
-
-
-* {
-  border: none;
-  font-family: "roboto";
-  font-size: 18px;
-  /* border-radius: 0px; */
-  /* min-height: 0; */
-}
+@define-color brpurple rgba(187, 154, 247, 0.3);
+@define-color brred #ff6c6b;
+@define-color brgreen #9ece6a;
+@define-color bryellow #e0af68;
+@define-color brcyan #7dcfff;
+@define-color brpink #f7768e;
 
 window#waybar {
-  background: transparent;
-  /* margin-top: 2px; */
-  /* color: @foreground; */
+  background: rgba(30, 27, 47, 0.35);
+  border-radius: 30px;
+  padding: 4px 12px;
+  margin: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: @foreground;
 }
 
 #workspaces {
-  background: @workspace_background;
-  /* opacity: 0.65; */
-  transition: none;
-  /* padding: 0px 10px 0px; */
+  background: #1f1b33;
   border-radius: 30px;
+  padding: 2px 4px;
 }
 
 #workspaces button, #workspaces button.persistent {
-  background: transparent;
-  color: @workspace_button;
-  transition: none;
+  background: #2c2542; /* dark pill */
+  color: @foreground;
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 14px;
+  margin-left: 4px;  /* spacing between pills */
+  margin-right: 4px;
+  transition: all 0.15s ease;
+}
+
+#workspaces button:first-child {
+  margin-left: 0;
+}
+
+#workspaces button:last-child {
+  margin-right: 0;
 }
 
 #workspaces button.active {
-  background: @workspace_active_background;
-  color: @workspace_active;
-  border-radius: 30px;
-  /*
-border-top: 2px solid @pink;
-border-bottom: 2px solid @pink;
-*/
+  background: #bb9af7; /* bright purple */
+  color: #1e1b2f;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(187,154,247,0.5); /* subtle glow */
 }
 
 #workspaces button.urgent {
-  background: @workspace_urgent_background;
-  color: @workspace_urgent;
-  border-radius: 30px;
+  background: #ff6c6b;
+  color: @foreground;
+  box-shadow: 0 0 6px rgba(255,108,107,0.5);
 }
 
 #workspaces button:hover {
-  background: @workspace_hover_background;
-  color: @workspace_hover;
-  border-radius: 30px;
+  background: rgba(187,154,247,0.25);
+  color: @white;
+  box-shadow: 0 0 6px rgba(187,154,247,0.3);
 }
 
+/* === Taskbar / Widgets === */
 #taskbar {
-  background: @background;
-  padding-left: 10px;
-  /* border-radius: 100px; */
-  /* margin: 2px 0px 0px 0px; */
+  background: transparent;
+  padding-left: 5px;
 }
 
 #taskbar button:hover {
-  background: @rgbabrpurple;
-}
-
-tooltip {
-  background: @rgbabrpurple;
-  border-radius: 30px;
-  border-width: 4px;
-  border-style: solid;
-  border-color: @purple;
-  color: @cyan;
-}
-
-tooltip label{
-  color: @gray;
+  background: rgba(187,154,247,0.15);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(187,154,247,0.3);
 }
 
 #custom-keep-awake-button,
-#tray {
-  color: @cyan;
-  background: @background;
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
+#tray,
 #custom-notification,
 #power-profiles-daemon,
 #cpu,
@@ -129,33 +94,12 @@ tooltip label{
 #battery,
 #network,
 #idle_inhibitor,
-#temperature,
-#battery {
-  color: @cyan;
-  padding-left: 5px;
-  padding-right: 5px;
+#temperature {
+  color: @purple;
+  padding: 0 4px;
+  font-size: 14px;
 }
 
-#battery.discharging {
-  color: @foreground;
-}
-
-#battery.charging {
-  color: @green;
-}
-
-#battery.warning:not(.charging) {
-  color: @warning;
-}
-
-#battery.critical:not(.charging) {
-  color: @critical;
-}
-
-#battery.healthy:not(.charging)  {
-  color: @healthy;
-}
-
-/* #clock { */
-/*   border-radius: 0px 5px 5px 0px; */
-/* } */
+#battery.charging { color: @green; }
+#battery.warning:not(.charging) { color: @yellow; }
+#battery.critical:not(.charging) { color: @red; }
