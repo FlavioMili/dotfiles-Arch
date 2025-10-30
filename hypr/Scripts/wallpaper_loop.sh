@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WALL_DIR="$HOME/Wallpapers"
+WALL_DIR="$HOME/Photos/Wallpapers"
 INTERVAL=600  # time in seconds
 RRHZ=120
 
