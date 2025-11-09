@@ -18,10 +18,10 @@ while [[ 0 -eq 0 ]]; do
 		if   [[ $battery_charge -le 15 ]]; then
 			notify-send --urgency=critical "Battery critical!" "${battery_charge}%"
 			sleep 200
-		elif [[ $battery_charge -le 25 ]]; then
+		elif [[ $battery_charge -le 20 ]]; then
 			notify-send --urgency=critical "Battery critical!" "${battery_charge}%"
 			sleep 300
-		elif [[ $battery_charge -le 35 ]]; then
+		elif [[ $battery_charge -le 28 ]]; then
 			notify-send "Battery low!" "${battery_charge}%"
 			sleep 500
 		fi
