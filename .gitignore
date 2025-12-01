@@ -1,3 +1,4 @@
+rstudio
 go
 dconf
 gtk-3.0
@@ -30,3 +31,4 @@ kden*
 PFERD
 rclone
 pavucontrol*
+.zshrc
