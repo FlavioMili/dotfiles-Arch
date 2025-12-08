@@ -2,5 +2,6 @@
 
 **Always work in progress**
 
-State of July 2025:
-<img width="1440" height="900" alt="image" src="https://github.com/user-attachments/assets/bbd1d088-35b8-43a4-a3e2-2ae7639f8e0a" />
+State of December 2025:
+<img width="2880" height="1800" alt="2025-12-08-221800_hyprshot" src="https://github.com/user-attachments/assets/1712d5b5-a110-44f9-9f93-34081dbb59a0" />
+
