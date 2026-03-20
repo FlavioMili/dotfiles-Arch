@@ -9,4 +9,5 @@ return {
   require("plugins.treesitter"),
   require("plugins.undotree"),
   require("plugins.vimtex"),
+  require("plugins.gitlink"),
 }
