@@ -1,0 +1,1 @@
+require("bearded-nvim").setup({})
