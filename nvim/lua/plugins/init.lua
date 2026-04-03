@@ -6,8 +6,6 @@ local plugins = {
   { name = "dashboard-nvim", src = "https://github.com/nvimdev/dashboard-nvim" },
   { name = "gitlink.nvim", src = "https://github.com/FlavioMili/gitlink.nvim" },
   { name = "hop.nvim", src = "https://github.com/smoka7/hop.nvim" },
-  { name = "markview.nvim", src = "https://github.com/OXY2DEV/markview.nvim" },
-  { name = "vim-doge", src = "https://github.com/kkoomen/vim-doge" },
   { name = "neo-tree.nvim", src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
   { name = "nui.nvim", src = "https://github.com/MunifTanjim/nui.nvim" },
   { name = "gitsigns.nvim", src = "https://github.com/lewis6991/gitsigns.nvim" },
@@ -30,17 +28,14 @@ local configs = {
   ["dashboard-nvim"] = "configs.dashboard",
   ["gitlink.nvim"] = "configs.gitlink",
   ["hop.nvim"] = "configs.hop",
-  ["markview.nvim"] = "configs.markview",
   ["neo-tree.nvim"] = "configs.neotree",
   ["gitsigns.nvim"] = "configs.gitsigns",
   ["lualine.nvim"] = "configs.lualine",
   ["bufferline.nvim"] = "configs.bufferline",
   ["telescope.nvim"] = "configs.telescope",
-  ["bearded-nvim"] = "configs.theme",
   ["which-key.nvim"] = "configs.whichkey",
 }
 
--- Load config safely
 local function load_config(name, critical)
   local config_mod = configs[name]
   if config_mod then
@@ -53,20 +48,18 @@ local function load_config(name, critical)
   end
 end
 
--- Add all plugins
 vim.pack.add(plugins)
 
--- Load UI Core immediately
 pcall(require, "nvim-web-devicons")
 load_config("which-key.nvim", true)
 load_config("lualine.nvim", true)
 load_config("bufferline.nvim", true)
-load_config("dashboard-nvim", true)
+load_config("mini.nvim", true)
+load_config("gitsigns.nvim", true)
 
--- Load others after a tick
 vim.schedule(function()
   for _, p in ipairs(plugins) do
-    if not ({["which-key.nvim"]=1, ["lualine.nvim"]=1, ["bufferline.nvim"]=1, ["dashboard-nvim"]=1})[p.name] then
+    if not ({["which-key.nvim"]=1, ["lualine.nvim"]=1, ["bufferline.nvim"]=1, ["mini.nvim"]=1, ["gitsigns.nvim"]=1, })[p.name] then
       load_config(p.name, false)
     end
   end

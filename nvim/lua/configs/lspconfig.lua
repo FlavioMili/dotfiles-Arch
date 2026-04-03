@@ -1,7 +1,6 @@
--- Diagnostic configuration (Subtle & Professional)
 vim.diagnostic.config({
   virtual_text = {
-    prefix = "●", -- Small circle instead of big block/letter
+    prefix = "●",
     spacing = 4,
   },
   signs = true,
@@ -14,23 +13,30 @@ vim.diagnostic.config({
   },
 })
 
--- Modern & Subtle diagnostic symbols (Restoring NvChad style)
 local signs = { Error = " ", Warn = " ", Hint = "󰌵 ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+    end
+  end,
+})
+
 local servers = { "html", "cssls", "ruff", "vhdl_ls", "gopls" }
+for _, lsp in ipairs(servers) do
+  vim.lsp.enable(lsp)
+end
 
--- Enable standard servers
-vim.lsp.enable(servers)
-
--- Special configuration for clangd (C++)
--- This fixes "Go to definition" and other common C++ LSP issues
 vim.lsp.config("clangd", {
   capabilities = {
-    offsetEncoding = { "utf-16" }, -- Crucial for clangd stability
+    offsetEncoding = { "utf-16" },
   },
   cmd = {
     "clangd",
