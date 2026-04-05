@@ -1,6 +1,3 @@
-vim.o.encoding = "utf-8"
-vim.o.fileencoding = "utf-8"
-vim.scriptencoding = "utf-8"
 vim.cmd("language en_US.UTF-8")
 
 vim.g.mapleader = " "
@@ -22,6 +19,7 @@ vim.o.secure = true
 vim.o.clipboard = "unnamedplus"
 vim.o.termguicolors = true
 vim.o.showtabline = 1
+vim.o.completeopt = "menu,menuone,noselect"
 vim.opt.fillchars:append({ eob = " " })
 vim.opt.shortmess:append("I")
 

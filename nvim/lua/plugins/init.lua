@@ -9,8 +9,6 @@ local plugins = {
   { name = "neo-tree.nvim", src = "https://github.com/nvim-neo-tree/neo-tree.nvim" },
   { name = "nui.nvim", src = "https://github.com/MunifTanjim/nui.nvim" },
   { name = "gitsigns.nvim", src = "https://github.com/lewis6991/gitsigns.nvim" },
-  { name = "lualine.nvim", src = "https://github.com/nvim-lualine/lualine.nvim" },
-  { name = "bufferline.nvim", src = "https://github.com/akinsho/bufferline.nvim" },
   { name = "telescope.nvim", src = "https://github.com/nvim-telescope/telescope.nvim" },
   { name = "plenary.nvim", src = "https://github.com/nvim-lua/plenary.nvim" },
   { name = "nvim-web-devicons", src = "https://github.com/nvim-tree/nvim-web-devicons" },
@@ -30,8 +28,6 @@ local configs = {
   ["hop.nvim"] = "configs.hop",
   ["neo-tree.nvim"] = "configs.neotree",
   ["gitsigns.nvim"] = "configs.gitsigns",
-  ["lualine.nvim"] = "configs.lualine",
-  ["bufferline.nvim"] = "configs.bufferline",
   ["telescope.nvim"] = "configs.telescope",
   ["which-key.nvim"] = "configs.whichkey",
 }
@@ -52,14 +48,13 @@ vim.pack.add(plugins)
 
 pcall(require, "nvim-web-devicons")
 load_config("which-key.nvim", true)
-load_config("lualine.nvim", true)
-load_config("bufferline.nvim", true)
 load_config("mini.nvim", true)
 load_config("gitsigns.nvim", true)
+load_config("nvim-lspconfig", true)
 
 vim.schedule(function()
   for _, p in ipairs(plugins) do
-    if not ({["which-key.nvim"]=1, ["lualine.nvim"]=1, ["bufferline.nvim"]=1, ["mini.nvim"]=1, ["gitsigns.nvim"]=1, })[p.name] then
+    if not ({["which-key.nvim"]=1, ["mini.nvim"]=1, ["gitsigns.nvim"]=1, ["nvim-lspconfig"]=1, })[p.name] then
       load_config(p.name, false)
     end
   end

@@ -17,17 +17,20 @@ local function get_saved_theme()
   return "bearded-arc-blueberry"
 end
 
-local function save_theme()
-  vim.schedule(function()
-    local theme = vim.g.colors_name
-    if theme and theme ~= "" and theme ~= "default" then
-      local f = io.open(theme_cache_file, "w")
-      if f then
-        f:write(theme)
-        f:close()
-      end
+local function save_theme(theme_name)
+  local theme = theme_name or vim.g.colors_name
+  if theme and theme ~= "" and theme ~= "default" then
+    local dir = vim.fn.fnamemodify(theme_cache_file, ":h")
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, "p")
     end
-  end)
+    
+    local f = io.open(theme_cache_file, "w")
+    if f then
+      f:write(theme)
+      f:close()
+    end
+  end
 end
 
 require "plugins"
@@ -39,15 +42,30 @@ if ok then
   bearded.setup({})
 end
 
+-- Load saved theme early
 local saved_theme = get_saved_theme()
 if not pcall(vim.cmd.colorscheme, saved_theme) then
   pcall(vim.cmd.colorscheme, "bearded-arc-blueberry")
 end
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-  callback = save_theme
+-- Autocmd to save theme on change
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  callback = function(args)
+    local theme = args.match
+    -- If it's just 'bearded', it might be because of M.load()
+    -- We prefer the match if it's a bearded-* variation
+    if theme == "bearded" then
+      -- If the user used :colorscheme bearded-arc-blueberry, args.match will be that.
+      -- If something else set vim.g.colors_name = "bearded", we might be in trouble.
+      -- But usually args.match is the name passed to :colorscheme
+    end
+    vim.schedule(function()
+      save_theme(theme)
+    end)
+  end
 })
 
+require "configs.ui"
 require "mappings"
 
 pcall(vim.cmd, "packadd nvim.undotree")
