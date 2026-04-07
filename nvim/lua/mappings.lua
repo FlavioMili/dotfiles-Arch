@@ -31,24 +31,6 @@ map("n", "<leader>ra", vim.lsp.buf.rename, { desc = "LSP rename" })
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
 map("n", "<leader>ds", vim.diagnostic.setloclist, { desc = "Diagnostic show buffer" })
 
--- Gitlink
-map({ "n", "v" }, "<leader>gl", function()
-  local gl = require("gitlink")
-  local mode = vim.fn.mode()
-  local l1, l2
-
-  if mode:match("[vV\22]") then
-    local vstart = vim.fn.getpos("v")[2]
-    local cursor = vim.api.nvim_win_get_cursor(0)[1]
-
-    l1, l2 = vstart, cursor
-    if l1 > l2 then l1, l2 = l2, l1 end
-  end
-
-  if l1 then gl.get_link({ line1 = l1, line2 = l2 })
-  else gl.get_link() end
-end, { desc = "Copy git link" })
-
 -- Hop
 map({ "n", "x", "o" }, "<leader>fj", function()
   require("hop").hint_words()
@@ -66,7 +48,6 @@ map("n", "<leader>gd", "<cmd>Gitsigns diffthis<cr>", { desc = "Git Diff (whole f
 map("n", "<leader>gh", "<cmd>Gitsigns preview_hunk<cr>", { desc = "Preview Git Hunk" })
 map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<cr>", { desc = "Toggle Git Blame" })
 
-
 -- Buffer navigation
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
@@ -82,8 +63,24 @@ map("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
 map("n", "<leader>tt", "<cmd>split | terminal<cr>i", { desc = "Open terminal horizontal" })
 map("t", "<Esc>", [[<C-\><C-n>]], { desc = "Escape terminal mode" })
 
+-- Esc to remove search highlights
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
 -- Copy whole file to clipboard
-map("n", "<C-c>", "<cmd>%y+<cr>", { desc = "Copy whole file to clipboard" })
+vim.keymap.set("n", "<C-a>", function()
+  -- select whole buffer and yank to system clipboard
+  vim.cmd('normal! ggVG"+y')
+end, { noremap = true, silent = true, desc = "Copy entire file to clipboard" })
+-- Completion navigation
+map("i", "<Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
+end, { expr = true, desc = "Next completion" })
+map("i", "<S-Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>"
+end, { expr = true, desc = "Previous completion" })
+map("i", "<CR>", function()
+  return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"
+end, { expr = true, desc = "Confirm completion" })
 
 -- Commenting (using built-in or mini.comment)
 map("n", "<leader>/", function()

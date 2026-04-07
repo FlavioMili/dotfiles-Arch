@@ -32,7 +32,37 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent, fg = sl_bg, bold = true })
 end
 
+-- Completion popup (matches Telescope style)
+local function setup_completion_highlights()
+  local normal = get_hl("Normal")
+  local type_hl = get_hl("Type")
+  local comment_hl = get_hl("Comment")
+
+  local bg     = normal.bg     and string.format("#%06x", normal.bg)     or "#111422"
+  local fg     = normal.fg     and string.format("#%06x", normal.fg)     or "#c8d3f5"
+  local accent = type_hl.fg   and string.format("#%06x", type_hl.fg)   or "#8eb0e6"
+  local muted  = comment_hl.fg and string.format("#%06x", comment_hl.fg) or "#4a5580"
+
+  -- Main popup — same bg as your editor, like Telescope
+  vim.api.nvim_set_hl(0, "Pmenu",       { bg = bg,     fg = fg })
+  vim.api.nvim_set_hl(0, "PmenuSel",   { bg = accent, fg = bg, bold = true })
+  vim.api.nvim_set_hl(0, "PmenuBorder", { fg = accent, bg = bg })
+  vim.api.nvim_set_hl(0, "PmenuThumb", { bg = accent })
+
+  -- Floating windows (info, signature, hover) — same treatment
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = bg, fg = fg })
+  vim.api.nvim_set_hl(0, "FloatBorder", { fg = accent, bg = bg })
+
+  -- Kind icons in the popup (the little symbols on the right)
+  vim.api.nvim_set_hl(0, "CmpItemKindText",     { fg = fg })
+  vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = accent })
+  vim.api.nvim_set_hl(0, "CmpItemKindKeyword",  { fg = accent })
+  vim.api.nvim_set_hl(0, "CmpItemAbbrMatch",    { fg = accent, bold = true })
+  vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = accent })
+end
+
 setup_highlights()
+setup_completion_highlights()
 
 vim.api.nvim_create_autocmd("ColorScheme", {
   callback = setup_highlights
@@ -102,11 +132,9 @@ function _G.tabline()
       local filename = name ~= "" and vim.fn.fnamemodify(name, ":t") or "[No Name]"
       local ext = vim.fn.fnamemodify(name, ":e")
       local icon = get_file_icon(filename, ext)
-      
       local is_active = buf == vim.api.nvim_get_current_buf()
       local hl = is_active and "%#TabLineSel#" or "%#TabLine#"
       local mod = vim.api.nvim_get_option_value("modified", { buf = buf }) and " ●" or ""
-      
       s = s .. hl .. "  " .. icon .. " " .. filename .. mod .. "  "
     end
   end

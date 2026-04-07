@@ -7,17 +7,14 @@ vim.diagnostic.config({
   float = { border = "rounded", source = "always" },
 })
 
--- Native LSP Completion and Capabilities
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     vim.schedule(function()
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if client then
-        -- Enable native completion (Nvim 0.12+)
         if vim.lsp.completion then
           vim.lsp.completion.enable(true, client.id)
         end
-        
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -25,7 +22,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Configure clangd with correct root markers for your project
 vim.lsp.config("clangd", {
   cmd = {
     "clangd",
@@ -38,8 +34,6 @@ vim.lsp.config("clangd", {
   root_markers = { "compile_commands.json", "compile_flags.txt", ".git", "build" },
 })
 
--- Enable servers using the native 0.11/0.12 API
--- This avoids using the deprecated 'lspconfig' setup function
 local servers = { "html", "cssls", "ruff", "vhdl_ls", "gopls", "clangd" }
 for _, lsp in ipairs(servers) do
   vim.lsp.enable(lsp)

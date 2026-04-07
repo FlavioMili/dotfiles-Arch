@@ -24,7 +24,7 @@ local function save_theme(theme_name)
     if vim.fn.isdirectory(dir) == 0 then
       vim.fn.mkdir(dir, "p")
     end
-    
+
     local f = io.open(theme_cache_file, "w")
     if f then
       f:write(theme)
@@ -52,13 +52,7 @@ end
 vim.api.nvim_create_autocmd({ "ColorScheme" }, {
   callback = function(args)
     local theme = args.match
-    -- If it's just 'bearded', it might be because of M.load()
-    -- We prefer the match if it's a bearded-* variation
-    if theme == "bearded" then
-      -- If the user used :colorscheme bearded-arc-blueberry, args.match will be that.
-      -- If something else set vim.g.colors_name = "bearded", we might be in trouble.
-      -- But usually args.match is the name passed to :colorscheme
-    end
+    if theme == "bearded" then end
     vim.schedule(function()
       save_theme(theme)
     end)

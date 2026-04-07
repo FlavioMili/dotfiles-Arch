@@ -1,5 +1,5 @@
 require("hop").setup({
   multi_windows = true,
-  keys = "wertiopksjdmxnc",
+  keys = "asdghklwertyuiopzxcvbnmqf",
   uppercase_labels = false,
 })
