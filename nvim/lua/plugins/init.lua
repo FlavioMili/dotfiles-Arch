@@ -14,6 +14,7 @@ local plugins = {
   { name = "nvim-web-devicons", src = "https://github.com/nvim-tree/nvim-web-devicons" },
   { name = "bearded-nvim", src = "https://github.com/Ferouk/bearded-nvim" },
   { name = "which-key.nvim", src = "https://github.com/folke/which-key.nvim" },
+  { name = "blink.cmp", src = "https://github.com/Saghen/blink.cmp", version = "main" },
 }
 
 _G.plugin_count = #plugins
@@ -30,6 +31,7 @@ local configs = {
   ["gitsigns.nvim"] = "configs.gitsigns",
   ["telescope.nvim"] = "configs.telescope",
   ["which-key.nvim"] = "configs.whichkey",
+  ["blink.cmp"] = "configs.blink",
 }
 
 local function load_config(name, critical)
@@ -47,15 +49,32 @@ end
 vim.pack.add(plugins)
 
 pcall(require, "nvim-web-devicons")
-load_config("which-key.nvim", true)
-load_config("mini.nvim", true)
-load_config("gitsigns.nvim", true)
-load_config("nvim-lspconfig", true)
 
-vim.schedule(function()
-  for _, p in ipairs(plugins) do
-    if not ({["which-key.nvim"]=1, ["mini.nvim"]=1, ["gitsigns.nvim"]=1, ["nvim-lspconfig"]=1, })[p.name] then
-      load_config(p.name, false)
+-- Essential plugins that should be available immediately
+local essential = {
+  "mini.nvim",
+  "nvim-lspconfig",
+  "gitsigns.nvim",
+  "blink.cmp",
+  "which-key.nvim",
+  "dashboard-nvim",
+}
+
+for _, name in ipairs(essential) do
+  load_config(name, true)
+end
+
+-- Load everything else lazily on the first file read or new buffer
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+  once = true,
+  callback = function()
+    local essential_set = {}
+    for _, name in ipairs(essential) do essential_set[name] = true end
+
+    for _, p in ipairs(plugins) do
+      if not essential_set[p.name] then
+        load_config(p.name, false)
+      end
     end
-  end
-end)
+  end,
+})

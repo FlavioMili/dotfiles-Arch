@@ -71,16 +71,6 @@ vim.keymap.set("n", "<C-a>", function()
   -- select whole buffer and yank to system clipboard
   vim.cmd('normal! ggVG"+y')
 end, { noremap = true, silent = true, desc = "Copy entire file to clipboard" })
--- Completion navigation
-map("i", "<Tab>", function()
-  return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
-end, { expr = true, desc = "Next completion" })
-map("i", "<S-Tab>", function()
-  return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>"
-end, { expr = true, desc = "Previous completion" })
-map("i", "<CR>", function()
-  return vim.fn.pumvisible() == 1 and "<C-y>" or "<CR>"
-end, { expr = true, desc = "Confirm completion" })
 
 -- Commenting (using built-in or mini.comment)
 map("n", "<leader>/", function()
