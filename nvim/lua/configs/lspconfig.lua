@@ -34,7 +34,7 @@ vim.lsp.config("clangd", {
   root_markers = { "compile_commands.json", "compile_flags.txt", ".git", "build" },
 })
 
-local servers = { "html", "cssls", "ruff", "vhdl_ls", "gopls", "clangd" }
+local servers = { "html", "cssls", "ruff", "gopls", "clangd" }
 for _, lsp in ipairs(servers) do
   vim.lsp.enable(lsp)
 end

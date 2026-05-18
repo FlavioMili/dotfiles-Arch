@@ -6,8 +6,16 @@ local options = {
       c = { "clang-format" },
       cpp = { "clang-format" },
       python = { "black", "isort" },
-      go = { "gopls", "goimports", "gofmt" },
-      rust = {"rustfmt", lsp_format = "fallback"},
+      go = { "goimports", "gofmt" },
+      rust = { "rustfmt", lsp_format = "fallback" },
+   },
+
+   formatters = {
+      ["clang-format"] = {
+         prepend_args = {
+            "-style={BasedOnStyle: Google, ColumnLimit: 100, InsertNewlineAtEOF: true, AllowShortLoopsOnASingleLine: true, AllowShortIfStatementsOnASingleLine: Always, AllowShortBlocksOnASingleLine: Always}",
+         },
+      },
    },
 
    -- format_on_save = {

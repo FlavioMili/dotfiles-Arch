@@ -58,6 +58,7 @@ local essential = {
   "blink.cmp",
   "which-key.nvim",
   "dashboard-nvim",
+  "hop.nvim",
 }
 
 for _, name in ipairs(essential) do

@@ -1,5 +1,10 @@
 vim.cmd("language en_US.UTF-8")
 
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
@@ -53,3 +58,9 @@ vim.opt.listchars = {
   extends = "»",
   precedes = "«",
 }
+
+vim.filetype.add({
+  extension = {
+    gotmpl = 'gotmpl',
+  },
+})

@@ -16,6 +16,9 @@ local function setup_highlights()
   local normal = get_hl("Normal")
   local sl_bg = sl.bg and string.format("#%06x", sl.bg) or (normal.bg and string.format("#%06x", normal.bg) or "#111422")
   local sl_fg = sl.fg and string.format("#%06x", sl.fg) or (normal.fg and string.format("#%06x", normal.fg) or "#8eb0e6")
+  
+  -- Theme background for a seamless tabline
+  local theme_bg = normal.bg and string.format("#%06x", normal.bg) or sl_bg
 
   -- Use Type or Keyword for the accent color to be theme-consistent
   local type_hl = get_hl("Type")
@@ -26,10 +29,11 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "User3", { fg = sl_fg, bg = sl_bg }) -- Filename
   vim.api.nvim_set_hl(0, "User4", { fg = accent, bg = sl_bg }) -- Separators
   
-  -- Clear TabLine border/attributes
-  vim.api.nvim_set_hl(0, "TabLine", { bg = sl_bg, fg = sl_fg, underline = false, bold = false, reverse = false })
-  vim.api.nvim_set_hl(0, "TabLineFill", { bg = sl_bg, fg = sl_bg, underline = false, bold = false, reverse = false })
-  vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent, fg = sl_bg, bold = true })
+  -- Seamless TabLine using theme background
+  vim.api.nvim_set_hl(0, "TabLine", { bg = theme_bg, fg = sl_fg, underline = false, bold = false, reverse = false })
+  vim.api.nvim_set_hl(0, "TabLineFill", { bg = theme_bg, fg = theme_bg, underline = false, bold = false, reverse = false })
+  -- Active buffer uses the accent color as background
+  vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent, fg = theme_bg, bold = true })
 end
 
 -- Completion popup (matches Telescope style)
