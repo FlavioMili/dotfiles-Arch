@@ -15,7 +15,7 @@ cursor-color = #9D81FF
 cursor-text = #39193B
 theme = Catppuccin Frappe
 mouse-hide-while-typing = true
-font-family = ComicShannsMono Nerd Font
+font-family = ComicShannsMono Nerd Font Propo
 font-size=12
 
 # fixing nvim
