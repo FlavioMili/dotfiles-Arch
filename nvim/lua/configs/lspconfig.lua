@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if vim.lsp.completion then
           vim.lsp.completion.enable(true, client.id)
         end
+        -- Let conform.nvim handle formatting
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
       end
@@ -22,6 +23,37 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- Pyright LSP configuration with virtualenv auto-detection
+vim.lsp.config("pyright", {
+  before_init = function(_, config)
+    local venv_python = vim.fn.getcwd() .. "/.venv/bin/python"
+    if vim.fn.executable(venv_python) == 1 then
+      config.settings.python.pythonPath = venv_python
+    end
+  end,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+      },
+    },
+  },
+})
+
+-- Ruff LSP configuration (ignore lambda assignment E731)
+vim.lsp.config("ruff", {
+  init_options = {
+    settings = {
+      lint = {
+        ignore = { "E731" },
+      },
+    },
+  },
+})
+
+-- Clangd LSP configuration
 vim.lsp.config("clangd", {
   cmd = {
     "clangd",
@@ -34,7 +66,8 @@ vim.lsp.config("clangd", {
   root_markers = { "compile_commands.json", "compile_flags.txt", ".git", "build" },
 })
 
-local servers = { "html", "cssls", "ruff", "gopls", "clangd" }
+-- Active LSP language servers
+local servers = { "html", "cssls", "ruff", "pyright", "gopls", "clangd" }
 for _, lsp in ipairs(servers) do
   vim.lsp.enable(lsp)
 end

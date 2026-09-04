@@ -5,7 +5,7 @@ local options = {
       html = { "prettier" },
       c = { "clang-format" },
       cpp = { "clang-format" },
-      python = { "black", "isort" },
+      python = { "ruff_organize_imports", "ruff_format" },
       go = { "goimports", "gofmt" },
       rust = { "rustfmt", lsp_format = "fallback" },
    },

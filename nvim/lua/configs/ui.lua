@@ -34,6 +34,12 @@ local function setup_highlights()
   vim.api.nvim_set_hl(0, "TabLineFill", { bg = theme_bg, fg = theme_bg, underline = false, bold = false, reverse = false })
   -- Active buffer uses the accent color as background
   vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent, fg = theme_bg, bold = true })
+
+  -- Docstring visual distinction (soft pastel italic style for Python docstrings)
+  local doc_fg = "#79dac8" -- Soft pastel teal/cyan
+  vim.api.nvim_set_hl(0, "@string.documentation", { fg = doc_fg, italic = true })
+  vim.api.nvim_set_hl(0, "@string.doc", { fg = doc_fg, italic = true })
+  vim.api.nvim_set_hl(0, "@comment.documentation", { fg = doc_fg, italic = true })
 end
 
 -- Completion popup (matches Telescope style)

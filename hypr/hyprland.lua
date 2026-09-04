@@ -276,6 +276,6 @@ hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "P", hl.dsp.exec_cmd("hyprshot -
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar & hyprsunset & ghostty & firefox & hypridle & swaync")
 	hl.exec_cmd("~/.config/hypr/Scripts/wallpaper_loop.sh")
-	hl.exec_cmd("~/.config/hypr/Scripts/battery_low_notification.sh")
+	hl.exec_cmd("~/.config/hypr/Scripts/display_power_policy.sh")
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 end)
