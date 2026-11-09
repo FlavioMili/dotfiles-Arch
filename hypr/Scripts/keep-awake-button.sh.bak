@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly unit=hypr-keep-awake.service
+running() { pgrep -u "$UID" -x hypridle >/dev/null; }
+awake() { systemctl --user is-active --quiet "$unit"; }
+status() {
+    if awake; then
+        printf '%s\n' '{"text":" ","class":"activated","tooltip":"Keep awake: ON — idle timers paused; closing the lid still sleeps"}'
+    else
+        printf '%s\n' '{"text":" ","class":"deactivated","tooltip":"Keep awake: OFF — normal idle and lid behavior"}'
+    fi
+}
+readonly action="${1:---toggle}"
+case "$action" in
+    --status) status; exit ;;
+    --toggle|--on|--off) ;;
+    *) printf 'Usage: %s [--status|--toggle|--on|--off]\n' "$0" >&2; exit 2 ;;
+esac
+: "${XDG_RUNTIME_DIR:?A desktop session is required}"
+exec 9>"$XDG_RUNTIME_DIR/keep-awake-toggle.lock"
+flock -n 9 || exit 0
+
+if [[ $action == --on ]] || { [[ $action == --toggle ]] && ! awake; }; then
+    if ! awake; then
+        systemd-run --user --quiet --collect --unit="$unit" \
+            --property=PartOf=graphical-session.target \
+            /usr/bin/systemd-inhibit --no-ask-password \
+            --what=idle --mode=block \
+            --who='Keep awake button' --why='Keep awake enabled in Waybar' \
+            /usr/bin/sleep infinity
+        sleep 0.2
+        awake || { printf 'Failed to acquire keep-awake inhibitor.\n' >&2; exit 1; }
+    fi
+    # Also stop the display/lock timers, independently of protocol support.
+    if running; then
+        pkill -TERM -u "$UID" -x hypridle
+        for ((attempt = 0; attempt < 40; attempt++)); do
+            running || break
+            sleep 0.05
+        done
+        running && { printf 'Failed to stop idle timers.\n' >&2; exit 1; }
+    fi
+else
+    systemctl --user stop "$unit" 2>/dev/null || true
+    if ! running; then
+        hyprctl eval 'hl.exec_cmd("hypridle > \"$XDG_RUNTIME_DIR/keep-awake-hypridle.log\" 2>&1")' >/dev/null
+        for ((attempt = 0; attempt < 40; attempt++)); do
+            running && break
+            sleep 0.05
+        done
+        running || { printf 'Failed to resume idle timers.\n' >&2; exit 1; }
+    fi
+fi
+# Refresh every bar instance even when called from a terminal.
+pkill -RTMIN+9 -u "$UID" -x waybar || true
+status

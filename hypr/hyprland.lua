@@ -256,8 +256,8 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 -- windowrule = suppressevent maximize, class:.*
 -- Fix some dragging issues with XWayland
 -- windowrule = nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0
-hl.bind("CTRL" .. " + " .. "F5", hl.dsp.exec_cmd("hyprctl hyprsunset temperature 3600"), { locked = true })
-hl.bind("CTRL" .. " + " .. "F6", hl.dsp.exec_cmd("hyprctl hyprsunset temperature 5000"), { locked = true })
+hl.bind("CTRL" .. " + " .. "F5", hl.dsp.exec_cmd("~/.config/hypr/Scripts/sunset_temperature.sh 3400"), { locked = true })
+hl.bind("CTRL" .. " + " .. "F6", hl.dsp.exec_cmd("~/.config/hypr/Scripts/sunset_temperature.sh 5000"), { locked = true })
 
 -- Screenshot a window
 hl.bind(mainMod .. " + " .. "P", hl.dsp.exec_cmd("hyprshot -m window -o ~/Photos/Screenshots/"))
@@ -274,8 +274,18 @@ hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "P", hl.dsp.exec_cmd("hyprshot -
 
 -- Autostart
 hl.on("hyprland.start", function()
-	hl.exec_cmd("waybar & hyprsunset & ghostty & firefox & hypridle & swaync")
-	hl.exec_cmd("~/.config/hypr/Scripts/wallpaper_loop.sh")
-	hl.exec_cmd("~/.config/hypr/Scripts/display_power_policy.sh")
 	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+	hl.exec_cmd("~/.config/hypr/Scripts/display_power_policy.sh")
+
+	-- Start Waybar after the initial monitor policy has settled.
+	hl.timer(function()
+		hl.exec_cmd("waybar")
+	end, { timeout = 2000, type = "oneshot" })
+
+	hl.exec_cmd("hyprsunset")
+	hl.exec_cmd("ghostty")
+	hl.exec_cmd("firefox")
+	hl.exec_cmd("hypridle")
+	hl.exec_cmd("swaync")
+	hl.exec_cmd("~/.config/hypr/Scripts/wallpaper_loop.sh")
 end)

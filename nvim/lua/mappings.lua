@@ -3,18 +3,20 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
-map("n", "<F10>", ":make <cr>", { desc = "cmake build" })
+require("configs.build").setup()
+map("n", "<F10>", "<cmd>Build<cr>", { desc = "Build project" })
 
 map("n", "<A-j>", ":m .+1<CR>==") -- move line up(n)
 map("n", "<A-k>", ":m .-2<CR>==") -- move line down(n)
 map("v", "<A-j>", ":m '>+1<CR>gv=gv") -- move line up(v)
 map("v", "<A-k>", ":m '<-2<CR>gv=gv") -- move line down(v)
 
--- Telescope (Fuzzy Finder)
+-- Conform detects the active visual selection for range formatting.
 map({ "n", "v" }, "<leader>fm", function()
-  require("conform").format { lsp_fallback = true }
+  require("conform").format { lsp_format = "fallback", timeout_ms = 3000 }
 end, { desc = "Format file or range" })
 
+-- Telescope (Fuzzy Finder)
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 map("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
 map("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers" })

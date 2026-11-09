@@ -1,0 +1,4 @@
+WRN 2026-10-27T17:12:43.035 ?.2        server_start:197: Failed to start server: operation not permitted: /run/user/1000/nvim.2.0
+WRN 2026-10-27T17:13:01.117 ?.2        server_start:197: Failed to start server: operation not permitted: /run/user/1000/nvim.2.0
+WRN 2026-10-27T17:13:09.330 ?.2        server_start:197: Failed to start server: operation not permitted: /run/user/1000/nvim.2.0
+WRN 2026-10-27T17:13:12.878 ?.2        server_start:197: Failed to start server: operation not permitted: /run/user/1000/nvim.2.0
